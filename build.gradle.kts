@@ -36,7 +36,7 @@ val androidSourceCompatibility = JavaVersion.VERSION_21
 val androidTargetCompatibility = JavaVersion.VERSION_21
 
 val localProperties = Properties()
-localProperties.load(file("local.properties").inputStream())
+localProperties.load(file("sign.properties").inputStream())
 val officialBuild by extra(localProperties.getProperty("officialBuild", "false") == "true")
 
 tasks.register("clean", Delete::class) {
@@ -61,7 +61,7 @@ fun Project.configureBaseExtension() {
 
         val config = localProperties.getProperty("fileDir")?.let {
             signingConfigs.create("config") {
-                storeFile = file(it)
+                storeFile = rootProject.file(it)
                 storePassword = localProperties.getProperty("storePassword")
                 keyAlias = localProperties.getProperty("keyAlias")
                 keyPassword = localProperties.getProperty("keyPassword")
