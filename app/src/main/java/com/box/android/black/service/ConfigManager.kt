@@ -19,7 +19,11 @@ object ConfigManager {
 
     fun init() {
         if (!configFile.exists()) {
-            configFile.writeText(JsonConfig().toString())
+            var text = ServiceClient.fetchConfig()
+            if (text.isEmpty()) {
+                text = JsonConfig().toString()
+            }
+            configFile.writeText(text)
         }
         runCatching {
             config = JsonConfig.parse(configFile.readText())

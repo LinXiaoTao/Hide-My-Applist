@@ -85,6 +85,8 @@ object ServiceClient : IBlackService, DeathRecipient {
         getServiceLegacy()?.clearLogs()
     }
 
+    override fun fetchConfig(): String = getServiceLegacy()?.fetchConfig() ?: ""
+
     override fun syncConfig(json: String) {
         getServiceLegacy()?.syncConfig(json)
     }

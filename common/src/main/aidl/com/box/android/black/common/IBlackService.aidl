@@ -13,4 +13,6 @@ interface IBlackService {
     String getLogs() = 4;
 
     void clearLogs() = 5;
+
+    String fetchConfig() = 6;
 }

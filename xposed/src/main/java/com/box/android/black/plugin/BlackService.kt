@@ -68,7 +68,7 @@ class BlackService(val pms: IPackageManager) : IBlackService.Stub() {
             }
         }
         File("/data/misc").list()?.forEach {
-            if (it.startsWith("hide_my_applist")) {
+            if (it.startsWith("black_applist")) {
                 if (!this::dataDir.isInitialized) {
                     dataDir = "/data/misc/$it"
                 } else if (dataDir != "/data/misc/$it") {
@@ -213,6 +213,15 @@ class BlackService(val pms: IPackageManager) : IBlackService.Stub() {
             oldLogFile.delete()
             logFile.renameTo(oldLogFile)
             logFile.createNewFile()
+        }
+    }
+
+    override fun fetchConfig(): String {
+        synchronized(configLock) {
+            if (config.templates.isNotEmpty()) {
+                return config.toString()
+            }
+            return "";
         }
     }
 }
